@@ -1,0 +1,17 @@
+input {
+    padding: 5px 10px;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    i {
+        margin: 0 5px;
+    }
+    &:disabled {
+        cursor: no-drop;
+        opacity: 0.2;
+    }
+}

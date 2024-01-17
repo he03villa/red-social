@@ -1,0 +1,105 @@
+<div class="bg-white" infiniteScroll [infiniteScrollDistance]="2"  (scrolled)="onScroll()">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 class="sr-only">Products</h2>
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 xl:gap-x-1">
+        <form [formGroup]="form">
+            <div class="contenedor-publicar">
+                <div class="contenedor-publicar-head">
+                    <label for="">¡Hola {{ dataUsuario ? dataUsuario.FullName : '' }}!</label>
+                    <p>Publica un nuevo post</p>
+                </div>
+                <div class="contenedor-publicar-body">
+                    <input type="text" placeholder="Ingresa Titulo" formControlName="Title">
+                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'El Titulo es requrido',
+                        control: form.controls['Title'],
+                        clase: 'black'
+                      }"></ng-container>
+                    <textarea name="" id="" placeholder="Ingresa Contecto" formControlName="Content"></textarea>
+                    <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                        validation: 'required',
+                        message: 'El Contecto es requrido',
+                        control: form.controls['Content'],
+                        clase: 'black'
+                      }"></ng-container>
+                    <button [disabled]="form.invalid" (click)="savePost($event) ">Publicar</button>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 xl:gap-x-1">
+        <div class="contenedor-publicar">
+            <div class="contenedor-publicar-body">
+                <input [(ngModel)]="filtro" type="text" placeholder="Filtrar por Titulo">
+                <button (click)="showPosts()">Filtar</button>
+            </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        @for (post of arrayPosts; track post) {
+            <div class="group">
+                @if (!post.update) {
+                    <h1 class="mt-4 text-sm text-gray-700">{{ post.user.FullName }}</h1>
+                    <label for="">{{ post.createdAt | formatFecha : 'dd/MM/yyyy hh:mm:ss' }}</label>
+                    <h4>{{ post.Title }}</h4>
+                    <p class="mt-1 text-lg font-medium text-gray-900">{{ post.Content }}</p>
+                    <div class="content-like">
+                        <div class="content-btn-like">
+                            <button (click)="like(post)">
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                Me gusta
+                            </button>
+                        </div>
+                        <div class="content-info-like">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            <label for="">{{ post.Likes }}</label>
+                        </div>
+                        @if (post.userId == dataUsuario?._id) {
+                            <div class="content-btn-like">
+                                <button (click)="editarPost(post)">Editar</button>
+                                <button (click)="eliminarPost($event, post)">Eliminar</button>
+                            </div>
+                        }
+                    </div>
+                } @else if (post.update) {
+                    <form [formGroup]="editarForm">
+                        <div class="contenedor-publicar">
+                            <div class="contenedor-publicar-body">
+                                <input type="text" placeholder="Ingresa Titulo" formControlName="Title">
+                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                    validation: 'required',
+                                    message: 'El Titulo es requrido',
+                                    control: form.controls['Title'],
+                                    clase: 'black'
+                                  }"></ng-container>
+                                <textarea name="" id="" placeholder="Ingresa Contecto" formControlName="Content"></textarea>
+                                <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                                    validation: 'required',
+                                    message: 'El Contecto es requrido',
+                                    control: form.controls['Content'],
+                                    clase: 'black'
+                                  }"></ng-container>
+                                <button [disabled]="editarForm.invalid" (click)="updatePost($event, post)">Actualizar</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        }
+      </div>
+    </div>
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-clase="clase" let-validation="validation">
+    @if (control.hasError(validation) && (control.dirty || control.touched)) {
+        <ng-container>
+            <div class="fv-plugins-message-container">
+              <!-- [ngClass]="clase" -->
+              <span role="alert" >
+                {{ message }}
+              </span>
+            </div>
+        </ng-container>
+    }
+</ng-template>

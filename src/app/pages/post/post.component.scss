@@ -1,0 +1,87 @@
+.contenedor-publicar {
+    label, p, textarea {
+        font-family: 'Montserrat';
+    }
+    .contenedor-publicar-head {
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        p {
+            font-weight: normal;
+            font-size: 12px;
+            color: #282B3B;
+        }
+    }
+    .contenedor-publicar-body {
+        textarea, input {
+            margin: 10px 0;
+            border: 1px solid #E9EAEB;
+            color: #ABAFB3;
+            font-weight: normal;
+            font-size: 14px;
+            width: 100%;
+            padding: 10px;
+            resize: none;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            font-family: 'Circular Std Book';
+            font-size: 11px;
+            border-radius: 20px;
+            font-weight: normal;
+            width: auto;
+            margin: 0;
+            padding: 5px 30px;
+            float: right
+        }
+    }
+}
+.group {
+    h1 {
+        font-size: 20px;
+        margin: 5px 0;
+        font-weight: bold;
+    }
+    label {
+        font-size: 13px;
+    }
+    h4 {
+        font-size: 23px;
+        font-weight: bold;
+    }
+    p {
+        font-size: 15px;
+    }
+
+    .content-like {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .content-btn-like {
+            display: flex;
+            align-items: center;
+            button {
+                margin: 0 6px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                i {
+                    margin: 0 5px;
+                }
+            }
+        }
+
+        .content-info-like {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            i {
+                margin: 0 5px;
+            }
+        }
+    }
+}
