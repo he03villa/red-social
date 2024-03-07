@@ -60,6 +60,11 @@ export class PostComponent {
     });
   }
 
+  filtroPost() {
+    this.arrayPosts = [];
+    this.showPosts();
+  }
+
   like(post:Post) {
     this._post.likePost(post._id).subscribe((res:Mensaje) => {
       post.Likes += 1;
